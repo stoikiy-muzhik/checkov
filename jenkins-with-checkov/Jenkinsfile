@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+//./desplieguejenkins/checkovDisableInlineSkips -dir=./desplieguejenkins/
+    stages {
+       /* stage ('checkov disable skip') {
+            steps {
+                script {
+                           sh  "echo 'nada'"
+                }
+                
+            }
+            
+        }*/
+        stage ('checkov') {
+            steps {
+                        script {
+                           sh  "checkov -d ."
+                    }
+                
+            }
+            
+        }
+                stage ('Deploy') {
+            steps {
+                        script {
+                           sh  "echo 'deploy'"
+                    }
+                
+            }
+            
+        }
+    }
+}
