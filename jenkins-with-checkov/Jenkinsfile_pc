@@ -4,7 +4,7 @@ pipeline {
         stage ('checkov scan') {
             steps {
                 script {
-                    sh "checkov -d ."
+                    sh "checkov -d . -o cli -o junitxml --output-file-path console,results.xml --prisma-api-url https://api.prismacloud.io --bc-api-key ${ACCESS_KEY}::${SECRET_KEY} --repo-id irgarcia21/checkov-test --branch master"
                 } 
             }
         }
