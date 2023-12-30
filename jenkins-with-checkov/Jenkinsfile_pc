@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-         PRISMA_API_URL =   "https://api.prismacloud.io"
+         PRISMA_API_URL =   'https://api.prismacloud.io'
          ACCESS_KEY     =   credentials ('pc-access-key')
          SECRET_KEY     =   credentials ('pc-secret-key')
     }
