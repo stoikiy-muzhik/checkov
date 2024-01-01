@@ -8,8 +8,17 @@ pipeline {
     stages {
         stage ('checkov scan') {
             steps {
-                withDockerContainer(image: 'bridgecrew/checkov:latest') {
-                    sh 'checkov -d . -o cli -o junitxml --output-file-path console,results.xml --prisma-api-url ${PRISMA_API_URL} --bc-api-key ${ACCESS_KEY}::${SECRET_KEY} --repo-id irgarcia21/checkov-test --branch master'
+                script {
+                    docker.image('bridgecrew/checkov:latest').inside("--entrypoint=''") {
+                        unstash 'source'
+                        try {
+                            sh 'checkov -d . --use-enforcement-rules -o cli -o junitxml --output-file-path console,results.xml --bc-api-key ${ACCESS_KEY}::${SECRET_KEY} --repo-id  irgarcia21/checkov-tests --branch master'
+                            junit skipPublishingChecks: true, testResults: 'results.xml'
+                        } catch (err) {
+                            junit skipPublishingChecks: true, testResults: 'results.xml'
+                            throw err
+                        }        
+                    }
                 }
             }
         }
