@@ -8,9 +8,9 @@ pipeline {
     stages {
         stage ('checkov scan') {
             steps {
-                script {
+                withDockerContainer(image: 'bridgecrew/checkov:latest') {
                     sh 'checkov -d . -o cli -o junitxml --output-file-path console,results.xml --prisma-api-url ${PRISMA_API_URL} --bc-api-key ${ACCESS_KEY}::${SECRET_KEY} --repo-id irgarcia21/checkov-test --branch master'
-                } 
+                }
             }
         }
         stage ('Deploy') {
