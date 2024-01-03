@@ -8,5 +8,3 @@ RUN apt update
 RUN apt install python3-full -y
 RUN apt install pip -y
 RUN pip install checkov --break-system-packages
-#USER jenkins
-#RUN jenkins-plugin-cli --plugins "blueocean:1.25.6 docker-workflow:1.29"
